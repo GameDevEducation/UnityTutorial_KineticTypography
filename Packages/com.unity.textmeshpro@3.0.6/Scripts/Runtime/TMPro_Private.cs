@@ -1266,6 +1266,16 @@ namespace TMPro
 
                 if (!char.IsWhiteSpace((char)unicode) && unicode != 0x200B)
                 {
+                    // BEGIN KINETIC TEXT SUPPORT
+
+                    if (m_submeshPerCharacter)
+                    {
+                        m_currentMaterialIndex = MaterialReference.AddMaterialReference(new Material(m_currentMaterial), m_currentFontAsset, ref m_materialReferences, m_materialReferenceIndexLookup);
+                        m_materialReferences[m_currentMaterialIndex].referenceCount += 1;
+                    }
+                    else
+                    // END KINETIC TEXT SUPPORT
+
                     // Limit the mesh of the main text object to 65535 vertices and use sub objects for the overflow.
                     if (m_materialReferences[m_currentMaterialIndex].referenceCount < 16383)
                         m_materialReferences[m_currentMaterialIndex].referenceCount += 1;

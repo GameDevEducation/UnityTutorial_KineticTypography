@@ -11,6 +11,13 @@ namespace TMPro.EditorUtilities
         //Labels and Tooltips
         static readonly GUIContent k_RtlToggleLabel = new GUIContent("Enable RTL Editor", "Reverses text direction and allows right to left editing.");
         //static readonly GUIContent k_MainSettingsLabel = new GUIContent("Main Settings");
+
+        // BEGIN KINETIC TEXT SUPPORT
+
+        static readonly GUIContent k_SubmeshPerCharToggleLabel = new GUIContent("Submesh per Character", "Creates one submesh per character");
+
+        // END KINETIC TEXT SUPPORT
+
         static readonly GUIContent k_FontAssetLabel = new GUIContent("Font Asset", "The Font Asset containing the glyphs that can be rendered for this text.");
         static readonly GUIContent k_MaterialPresetLabel = new GUIContent("Material Preset", "The material used for rendering. Only materials created from the Font Asset can be used.");
         static readonly GUIContent k_StyleLabel = new GUIContent("Text Style", "The style from a style sheet to be applied to the text.");
@@ -91,6 +98,12 @@ namespace TMPro.EditorUtilities
         public int selAlignGridB;
 
         protected SerializedProperty m_TextProp;
+
+        // BEGIN KINETIC TEXT SUPPORT
+
+        protected SerializedProperty m_SubmeshPerCharProp;
+
+        // END KINETIC TEXT SUPPORT
 
         protected SerializedProperty m_IsRightToLeftProp;
         protected string m_RtlText;
@@ -183,6 +196,13 @@ namespace TMPro.EditorUtilities
         protected virtual void OnEnable()
         {
             m_TextProp = serializedObject.FindProperty("m_text");
+
+            // BEGIN KINETIC TEXT SUPPORT
+
+            m_SubmeshPerCharProp = serializedObject.FindProperty("m_submeshPerCharacter");
+
+            // END KINETIC TEXT SUPPORT
+
             m_IsRightToLeftProp = serializedObject.FindProperty("m_isRightToLeft");
             m_FontAssetProp = serializedObject.FindProperty("m_fontAsset");
             m_FontSharedMaterialProp = serializedObject.FindProperty("m_sharedMaterial");
@@ -428,6 +448,13 @@ namespace TMPro.EditorUtilities
 
                 EditorGUI.BeginChangeCheck();
                 EditorGUILayout.PropertyField(m_TextProp, GUIContent.none);
+
+                // BEGIN KINETIC TEXT SUPPORT
+
+                if (m_SubmeshPerCharProp != null)
+                    EditorGUILayout.PropertyField(m_SubmeshPerCharProp);
+
+                // END KINETIC TEXT SUPPORT
 
                 // Need to also compare string content due to issue related to scroll bar drag handle
                 if (EditorGUI.EndChangeCheck() && m_TextProp.stringValue != m_TextComponent.text)

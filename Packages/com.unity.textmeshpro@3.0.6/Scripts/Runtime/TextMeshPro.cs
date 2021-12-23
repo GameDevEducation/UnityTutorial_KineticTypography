@@ -164,6 +164,12 @@ namespace TMPro
             }
         }
 
+        // BEGIN KINETIC TEXT SUPPORT
+
+        public bool m_submeshPerCharacter = false;
+
+        // END KINETIC TEXT SUPPORT
+
         // MASKING RELATED PROPERTIES
         /// <summary>
         /// Sets the mask type
